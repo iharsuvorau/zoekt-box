@@ -1,0 +1,16 @@
+.DS_Store
+index/
+repos/
+
+# Go
+bin/
+pkg/
+src/
+
+# Zoekt specific
+*.log
+*.zoekt
+
+# Agent/Session Files (Private info/Full paths)
+.agent/
+.opencode/

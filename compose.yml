@@ -1,0 +1,25 @@
+services:
+  zoekt-webserver:
+    build: .
+    image: zoekt-box:latest
+    container_name: zoekt-webserver
+    restart: unless-stopped
+    ports:
+      - "6070:6070"
+    volumes:
+      - ./index:/data/index
+    command: ["zoekt-webserver", "-index", "/data/index", "-listen", ":6070"]
+
+  zoekt-indexer:
+    build: .
+    image: zoekt-box:latest
+    container_name: zoekt-indexer
+    restart: unless-stopped
+    environment:
+      - ZOEKT_INTERVAL=3600
+      - ZOEKT_INDEX_PLAIN_FOLDERS=false
+    volumes:
+      - ./index:/data/index
+      - ~/dev:/data/repos
+    command: ["/usr/local/bin/indexer.sh"]
+
